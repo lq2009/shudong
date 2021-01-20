@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+
+{% block title -%}
+    投递秘密 - 树洞网
+{%- endblock %}
+{% block kui -%}
+{%- endblock %}
+{% block content %}
+    <br />把秘密说给路人，树洞会为你保密哦<br />
+	<h3>请不要发布 涉及政治、广告、谣言、情色 等违法信息</h3>
+    <form action="/add" method="post">
+        <p><textarea name="text" id="text"></textarea></p>
+        <p><input  type="submit" value="提交"></p>    
+    </form>
+{% endblock %}   

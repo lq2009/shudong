@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xml:lang="zh" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+	<title>{% block title %}树洞网 - 在树洞寄存心灵的秘密{% endblock %}</title>
+	<meta name="description" content="树洞网是一个匿名秘密分享交流平台，起源自树洞微博，在这里可以寄存你的秘密、内心纠结以及对他人的祝愿等。它将分享给每个路过的过路人，一起倾听来自心海的回音。" />
+    <meta name="keywords" content="树洞,树洞网,秘密,悄悄话,发泄网,树洞APP,秘密网,树洞微博" />
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="117x117" href="/static/logo.png">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta property="qc:admins" content="3351160315476762145636" /> 
+	<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+	<link href="/static/style.css" media="screen" rel="stylesheet" type="text/css" />
+ 	<script src="/static/treehole.js" type="text/javascript"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?602fb75649d24d0acbf520506fdbd515";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+	<div id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="//shudong.21du.cn/">
+                    <img height="30" src="/static/logo.png">
+                    <span style="font-family: FangSong; font-size: 25px; font-weight:bold; position: relative; margin-left: 5px; top: 3px">树</span>
+                    <span style="font-size: 20px; font-weight:100; position: relative; margin-left: -5px; top: 2px">洞</span>
+                </a>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <!--<li><a href="/popular" title="今日热门树洞">热门</a> </li>-->
+                    {% if 'uid' in request['session'] %}
+                    <li><a href="/post">发表</a> </li>
+                    <li><a href="/signout">注销</a></li>
+                    {% else %}
+                    <li><a href="/signin" title="寄存秘密">投稿？Go</a></li>	
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+	</div>
+	<div class="content">
+	<div class="container">
+		<div style="text-align:center;">
+			<span id="info">{% block info %}{% endblock %}</span>
+        </div>
+        {% block kui %}
+        <div class="row">
+            <input name="Number" class="form-control left" id="Number" type="text" placeholder="输入编号、关键字搜索，如: 13064" value="" onkeydown="if(event.keyCode==13){kui();}" />
+            <button class="kui-button left" type="submit" onclick="javascript:kui();">窥一下</button>
+		</div>
+        {% endblock %}
+        
+        {% block content %}{% endblock %}
+
+    </div>
+    </div>
+    <div class="footer">
+        {% block  footer %}
+        &copy; 21°树洞网，创建于2010年<br />{#{request.client.host}#}
+        <a href="mailto:shudong@21du.cn" title="请发送#树洞编号 邮件至 shudong@21du.cn,邮件会实时处理">反馈</a> | <a href="/popular" title="今日热门树洞">热门</a> | <a href="https://github.com/lq2009">源码</a> | <a href="https://beian.miit.gov.cn">皖ICP备12004841号</a>
+        {% endblock %}
+    </div>
+    <!-- script type="text/javascript" src="https://js.users.51.la/6822831.js"></script -->
+</body>
+</html>

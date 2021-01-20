@@ -1,0 +1,34 @@
+{% extends "base.html" %} 
+
+{% block title -%}
+    {% if page=='pop' %}热门树洞 - 树洞网{% else %}{{ super() }}{% endif %}
+{%- endblock %}
+
+{% block content %}
+    {% for item in items %}
+        <div class="item item-{{item['id']}}" >
+        <div class="item-id"><a href="//shudong.21du.cn/view/{{item['hid']}}" title="查看#{{item['id']}}#号树洞">树洞#{{item['id']}}#</a></div>
+        <div class="item-content"><p>{{ item['text']|safe }}</p>
+        {% if loop.index == 4 %}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+            style="display:block; text-align:center;"
+            data-ad-layout="in-article"
+            data-ad-format="fluid"
+            data-ad-client="ca-pub-1544593310826984"
+            data-ad-slot="6267646481">
+        </ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        {% endif %}
+        </div>
+        <div class="meta"><p> <a href="//shudong.21du.cn/view/{{item['hid']}}" title="查看全文"> {{item['time']}} {% if ':' in item['ip'] %}(IPv6){% endif %}</a> | <a href="javascript:vote('{{item['hid']}}')">推荐 +1</a> (<span id="vote-{{item['hid']}}">{{item['vote']}}</span>) 
+        {% if 'sysop' in request['session'] %}
+         | <a href="javascript:sysadmin('delete',{{item['id']}})" >删除</a> | <a href="javascript:sysadmin('ban','{{item['uid']}}')" >禁言</a>
+        {% endif %}
+        </p></div>
+        </div>
+    {% endfor %}
+{% endblock %}   
+

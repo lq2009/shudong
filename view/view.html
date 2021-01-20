@@ -1,0 +1,68 @@
+{% extends "base.html" %} 
+
+{% block title -%}
+    {{item['title']}} - 树洞
+{%- endblock %}
+
+{% block kui -%}
+{%- endblock %}
+
+{% block content %}
+    <div class="item item-{{item['id']}}" >
+	<div class="item-id"><h3 class="text-center">树洞#{{item['id']}}#</h3></div>
+    <div class="item-content"><p>{{item['text']|safe}}</p></div>
+
+    <div class="meta">
+	<p> {{item['time']}} {% if ':' in item['ip'] %}(IPv6){% endif %} | <a href="//shudong.21du.cn/view/{{item['hid']}}">评论 +</a> ({{cnum}}) | 
+    <a href="javascript:vote('{{item['hid']}}')">推荐 +1</a> (<span id="vote-{{item['hid']}}">{{item['vote']}}</span>) 
+    {% if 'sysop' in request['session'] %}
+        | <a href="javascript:sysadmin('hide',{{item['id']}})" >去广告</a> | <a href="javascript:sysadmin('delete',{{item['id']}})" >删除</a> | <a href="javascript:sysadmin('ban','{{item['uid']}}')" >禁言</a>
+    {% endif %}
+    </p></div>
+    </div>
+    
+    <div id="comment">
+        {% if item['status'] != 4 %}
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- shudong.21du.cn -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1544593310826984" data-ad-slot="5039395977" data-ad-format="auto"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        {% endif %}
+        
+        <h3 class="text-center">过客留言</h3>
+        {% if 'uid' in request['session'] %}
+        <br />你想对它说? 树洞不会记录你的个人信息 
+		<form action="/view/{{item['hid']}}" method="post">  		
+		<p><textarea name="text" id="ctext"></textarea></p>
+		<p><input  type="submit" value="提交"> </p>    
+		</form>
+        {% else %}
+        <p>为防止垃圾信息，留言前请先<a href="/signin?ref=/view/{{item['hid']}}">登录</a></p>
+        <p>--</p>
+        {% endif %}
+        {% if cnum==0 %}
+        <p>还没有留言</p>
+        <p>--</p>
+        {% else %}
+        {% for rep in reps %}
+            <div class="item">
+            <div class="item-content" ><p>{{rep['text']|safe}}</p></div>
+            <div class="meta"><p>{{rep['user']}} 写于 {{rep['time']}} {% if ':' in rep['ip'] %}(IPv6){% endif %}
+            {% if 'sysop' in request['session'] %}
+            | <a href="javascript:sysadmin('r{{item['id']}}',{{rep['index']}})" >删除</a> | <a href="javascript:sysadmin('ban','{{rep['uid']}}')" >禁言</a>
+            {% endif %}
+            </p> </div>
+            </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    
+    <h3 class="text-center">最近树洞</h3>
+    {% for item in items %}
+        <div class="item item-{{item['id']}}">
+        <div class="item-content"><p><a href="//shudong.21du.cn/view/{{item['hid']}}" title="查看#{{item['id']}}">#{{item['id']}}:{{item['text']}}...</a></p></div>
+        <div class="meta"> </div>
+        </div>
+    {% endfor %}
+{% endblock %}   
+
